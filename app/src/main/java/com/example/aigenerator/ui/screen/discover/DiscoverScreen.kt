@@ -50,6 +50,23 @@ private fun DiscoverScreenContent(onAdd: () -> Unit) = Column(
     }
 }
 
+/*
+@Preview(showBackground = true, device = "id:2.7in QVGA", showSystemUi = true)
+@Preview(showBackground = true, device = "id:3.7in WVGA (Nexus One)", showSystemUi = true)
+@Preview(showBackground = true, device = "id:small_phone", showSystemUi = true)
+
+@Preview(showBackground = true, device = "id:5.1in WVGA", showSystemUi = true)
+@Preview(showBackground = true, device = "id:medium_phone", showSystemUi = true)
+@Preview(showBackground = true, device = "id:6.7in Foldable", showSystemUi = true)
+
+@Preview(showBackground = true, device = "id:7in WSVGA (Tablet)", showSystemUi = true)
+@Preview(showBackground = true, device = "id:7.6in Foldable", showSystemUi = true)
+@Preview(showBackground = true, device = "id:8in Foldable", showSystemUi = true)
+
+@Preview(showBackground = true, device = "id:medium_tablet", showSystemUi = true)
+@Preview(showBackground = true, device = "id:10.1in WXGA (Tablet)", showSystemUi = true)
+@Preview(showBackground = true, device = "id:13.5in Freeform", showSystemUi = true)
+*/
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DiscoverScreenPreview() = AIGeneratorTheme {
