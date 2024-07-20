@@ -74,6 +74,8 @@ dependencies {
 
     implementation(libs.androidx.constraintlayout.compose)
 
+    implementation(libs.androidx.datastore.preferences)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)

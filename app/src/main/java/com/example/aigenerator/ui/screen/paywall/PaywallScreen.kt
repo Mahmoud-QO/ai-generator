@@ -14,11 +14,14 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -26,6 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.aigenerator.R
 import com.example.aigenerator.model.User
 import com.example.aigenerator.model.UserReview
@@ -35,12 +40,19 @@ import com.example.aigenerator.ui.component.UserReviewCard
 import com.example.aigenerator.ui.theme.AIGeneratorTheme
 
 @Composable
-fun PaywallScreen() {
-    PaywallScreenContent()
+fun PaywallScreen(
+    navController: NavController,
+    viewModel: PaywallViewModel = hiltViewModel()
+) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.navigateToDiscover.collect { navController.navigateUp() }
+    }
+
+    PaywallScreenContent(viewModel::onEvent)
 }
 
 @Composable
-private fun PaywallScreenContent() = Column(
+private fun PaywallScreenContent(onEvent: (PaywallEvent) -> Unit) = Column(
     modifier = Modifier
         .fillMaxSize().background(MaterialTheme.colorScheme.background).navigationBarsPadding()
 ) {
@@ -70,7 +82,8 @@ private fun PaywallScreenContent() = Column(
             }
 
             FreeTrialProgressBar(
-                Modifier.fillMaxWidth().height(220.dp).padding(start = 24.dp, end = 54.dp)
+                Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).weight(1f, false)
+                    .padding(start = 24.dp, end = 54.dp)
             )
 
             val pagerState = rememberPagerState(initialPage = 2) { usersReviews.size }
@@ -100,7 +113,9 @@ private fun PaywallScreenContent() = Column(
             )
         }
 
-        PrimaryButton(text = stringResource(R.string.subscribe_for_month)) { /*TODO*/ }
+        PrimaryButton(text = stringResource(R.string.subscribe_for_month)) {
+            onEvent(PaywallEvent.ClickSubscribe)
+        }
 
         TextButton(onClick = { /*TODO*/ }) {
             Icon(
@@ -117,7 +132,7 @@ private fun PaywallScreenContent() = Column(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun PaywallScreenPreview() = AIGeneratorTheme {
-    PaywallScreenContent()
+    PaywallScreenContent {}
 }
 
 private val usersReviews = listOf(
